@@ -38,21 +38,21 @@ int main() {
 //    delete[] A;
 //    return 0;
 
-    int n,q,index,k=0;
-    std::cin>>n;
-    std::cin>>q;
+    int n, q, index, k = 0;
+    std::cin >> n;
+    std::cin >> q;
     vector<std::vector<int>> arrays;
 
     int i = 0;
     while (i != n) {
         int counter = 0;
-        std::cin>>k;
+        std::cin >> k;
         arrays.emplace_back();
         vector<int> test = arrays.at(i);
 
-        while(counter < k){
+        while (counter < k) {
             int value;
-            cin>>value;
+            cin >> value;
             arrays.at(i).push_back(value);
             counter++;
         };
@@ -62,12 +62,85 @@ int main() {
     int z = 0;
     while (z != n) {
         int c = 0;
-        std::cin>>k;
-        std::cin>>c;
+        std::cin >> k;
+        std::cin >> c;
 
-        cout<<arrays.at(k).at(c)<<'\n';
+        cout << arrays.at(k).at(c) << '\n';
         z++;
     }
 
     return 0;
+}
+
+class Complex {
+public:
+    int a, b;
+
+    Complex(int r = 0, int i = 0) {
+        a = r;
+        b = i;
+    }
+
+    Complex operator+(Complex const &obj) {
+        Complex result;
+        result.a = a + obj.a;
+        result.b = b + obj.b;
+        return result;
+    }
+
+    void input(std::string input) {
+        a = std::stoi(input.substr(0, input.find("+i")));
+        b = std::stoi(input.substr(1, input.find("+i")));
+    }
+
+    friend ostream &operator<<(ostream &os, const Complex &complex);
+};
+
+ostream &operator<<(ostream &os, const Complex &complex) {
+    os << complex.a << "+i" << complex.b;
+    return os;
+}
+
+Complex operator+(Complex const &c1, Complex const &c2) {
+    return Complex(c1.a + c2.a, c1.b + c2.b);
+}
+
+// or
+//Complex operator+(Complex const &c1, Complex const &c2) {
+//    Complex result;
+//    result.a = c1.a + c2.a;
+//    result.b = c1.b + c2.b;
+//    return result;
+//}
+
+int overload_operators() {
+    std::string first, second;
+    std::string delimiter = "+i";
+
+    std::cin >> first;
+    std::cin >> second;
+
+    Complex complex1 = Complex();
+    Complex complex2 = Complex();
+
+    complex1.a = std::stoi(first.substr(0, first.find(delimiter)));
+    complex1.b = std::stoi(first.substr(1, first.find(delimiter)));
+    complex2.a = std::stoi(second.substr(0, second.find(delimiter)));
+    complex2.b = std::stoi(second.substr(1, second.find(delimiter)));
+
+    Complex complex3 = complex1 + complex2;
+    cout << complex3;
+    return 0;
+}
+
+int overload_operators2()
+{
+    Complex x,y;
+    string s1,s2;
+    cin>>s1;
+    cin>>s2;
+    x.input(s1);
+    y.input(s2);
+    Complex z=x+y;
+    cout<<z<<endl;
 }
