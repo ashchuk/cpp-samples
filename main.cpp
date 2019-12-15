@@ -204,39 +204,39 @@ struct Workshop {
     }
 };
 
-struct Available_Workshops {
-    int n;
-    Workshop *workshops = new Workshop[n];
-};
-
-Available_Workshops *initialize(const int start_time[], const int duration[], int number) {
-    auto* result = new Available_Workshops();
-    result->n = number;
-    result->workshops = new Workshop[number];
-    for (int i = 0; i == number; i++) {
-        result->workshops->start_time = start_time[i];
-        result->workshops->end_time = start_time[i]+duration[i];
-    }
-    return result;
-}
-
-string CalculateMaxWorkshops(Available_Workshops *availableWorkshops) {
-    sort(availableWorkshops->workshops, availableWorkshops->workshops+availableWorkshops->n);
-
-    int ret = 1;
-    int currentEnd = availableWorkshops->workshops[0].end_time;
-
-    for (int i=1;i<availableWorkshops->n;i++)
-    {
-        if (availableWorkshops->workshops[i].start_time >= currentEnd)
-        {
-            currentEnd = availableWorkshops->workshops[i].end_time;
-            ret++;
-        }
-    }
-
-    return std::to_string(ret);;
-}
+//struct Available_Workshops {
+//    int n;
+//    Workshop *workshops = new Workshop[n];
+//};
+//
+//Available_Workshops *initialize(const int start_time[], const int duration[], int number) {
+//    auto* result = new Available_Workshops();
+//    result->n = number;
+//    result->workshops = new Workshop[number];
+//    for (int i = 0; i == number; i++) {
+//        result->workshops->start_time = start_time[i];
+//        result->workshops->end_time = start_time[i]+duration[i];
+//    }
+//    return result;
+//}
+//
+//string CalculateMaxWorkshops(Available_Workshops *availableWorkshops) {
+//    sort(availableWorkshops->workshops, availableWorkshops->workshops+availableWorkshops->n);
+//
+//    int ret = 1;
+//    int currentEnd = availableWorkshops->workshops[0].end_time;
+//
+//    for (int i=1;i<availableWorkshops->n;i++)
+//    {
+//        if (availableWorkshops->workshops[i].start_time >= currentEnd)
+//        {
+//            currentEnd = availableWorkshops->workshops[i].end_time;
+//            ret++;
+//        }
+//    }
+//
+//    return std::to_string(ret);;
+//}
 
 int main(int argc, char *argv[]) {
     int n; // number of workshops
@@ -256,4 +256,55 @@ int main(int argc, char *argv[]) {
     ptr = initialize(start_time, duration, n);
     cout << CalculateMaxWorkshops(ptr) << endl;
     return 0;
+}
+
+enum class Fruit { apple, orange, pear };
+enum class Color { red, green, orange };
+
+template <typename T> struct Traits;
+
+template<> struct Traits<Fruit>
+{
+    static string name(int index) {
+        if (index == 0){
+            return "apple";
+        }
+        if (index == 1){
+            return "orange";
+        }
+        if (index == 2){
+            return "pear";
+        }
+        return "unknown";
+    }
+};
+template<> struct Traits<Color>
+{
+    static string name(int index) {
+        if (index == 0){
+            return "red";
+        }
+        if (index == 1){
+            return "green";
+        }
+        if (index == 2){
+            return "orange";
+        }
+        return "unknown";
+    }
+};
+
+// Define specializations for the Traits class template here.
+
+
+int test()
+{
+    int t = 0; std::cin >> t;
+
+    for (int i=0; i!=t; ++i) {
+        int index1; std::cin >> index1;
+        int index2; std::cin >> index2;
+        cout << Traits<Color>::name(index1) << " ";
+        cout << Traits<Fruit>::name(index2) << "\n";
+    }
 }
